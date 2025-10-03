@@ -1,0 +1,100 @@
+#Practica 6. Factory y Observer
+
+#Factory
+#Define una interfaz para crear objetos, pero deja que las subclases decidan qué clase instanciar
+
+# FACTORY (Métodos de Pago)
+class MetodoPago:
+    #Clase base (no abstracta) para métodos de pago
+    def pagar(self, monto):
+        print("Este es un método de pago genérico")
+
+
+class TarjetaCredito(MetodoPago):
+    def pagar(self, monto):
+        print(f"[Tarjeta] Se realizó un pago de ${monto} con tarjeta de crédito")
+
+
+class PayPal(MetodoPago):
+    def pagar(self, monto):
+        print(f"[PayPal] Se realizó un pago de ${monto} con PayPal")
+
+
+class Criptomoneda(MetodoPago):
+    def pagar(self, monto):
+        print(f"[Cripto] Se realizó un pago de ${monto} en criptomonedas")
+
+
+class MetodoPagoFactory:
+    #Factory que crea instancias de métodos de pago según el tipo solicitado
+    def crear_metodo_pago(self, tipo):
+        if tipo == "tarjeta":
+            return TarjetaCredito()
+        elif tipo == "paypal":
+            return PayPal()
+        elif tipo == "cripto":
+            return Criptomoneda()
+        else:
+            return MetodoPago()  #En caso de que no se reconozca el tipo
+
+
+#Observer
+#Permite que varios objetos (observadores) se suscriban a otro objeto (sujeto) y 
+#sean notificados automáticamente cuando cambie su estado
+
+# OBSERVER (Notificaciones)
+
+class Cliente:
+    #Cliente que se suscribe a un producto para recibir notificaciones
+    def __init__(self, nombre):
+        self.nombre = nombre
+
+    def actualizar(self, producto):
+        print(f"¡Hola {self.nombre}, el producto '{producto.nombre}' ya está disponible!")
+
+
+class Producto:
+    #Producto que notifica a los clientes cuando está disponible
+    def __init__(self, nombre):
+        self.nombre = nombre
+        self.disponible = False
+        self.observadores = []  # Lista de clientes suscritos
+
+    def agregar_observador(self, cliente):
+        self.observadores.append(cliente)
+
+    def notificar_observadores(self):
+        for cliente in self.observadores:
+            cliente.actualizar(self)
+
+    def reabastecer(self):
+        print(f"✅ El producto '{self.nombre}' ha sido reabastecido")
+        self.disponible = True
+        self.notificar_observadores()
+
+
+
+#Uso del Factory
+print("...FACTORY: Pagos...")
+factory = MetodoPagoFactory()
+pago1 = factory.crear_metodo_pago("tarjeta")
+pago2 = factory.crear_metodo_pago("paypal")
+pago3 = factory.crear_metodo_pago("cripto")
+
+pago1.pagar(100)
+pago2.pagar(250)
+pago3.pagar(0.05)
+
+#Uso del Observer
+print("\n...OBSERVER: Notificaciones de stock...")
+producto = Producto("PlayStation 6")
+
+cliente1 = Cliente("Dilan")
+cliente2 = Cliente("Ana")
+
+#Los clientes se suscriben a notificaciones
+producto.agregar_observador(cliente1)
+    
+
+#Cuando el producto se reabastece, se notifica automáticamente
+producto.reabastecer()

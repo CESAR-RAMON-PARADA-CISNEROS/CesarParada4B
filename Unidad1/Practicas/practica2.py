@@ -1,0 +1,65 @@
+# Practica 2. Atributos públicos y privados
+
+class Persona:
+    def __init__(self, nombre, edad): #Constructor de una Clase
+        self.nombre = nombre
+        self.edad = edad
+        self.__cuenta = None #Atributo Privado
+
+    def presentarse(self):
+        print(f"Hola mi nombre es {self.nombre}")
+
+    def cumplir_anios(self):
+        self.edad += 1
+        print(f"{self.nombre} y ahora tiene {self.edad} años")
+
+    def asignar_cuenta(self, cuenta):
+        self.__cuenta = cuenta
+        print(f"{self.nombre} ahora tiene una cuenta bancaria")
+
+    def consultar_saldo(self):
+        if self.__cuenta:
+            print(f"El saldo de {self.nombre} es ${self.__cuenta.mostrar_saldo()}")
+        else:
+            print(f"{self.nombre} aun no tiene cuenta bancaria")
+
+
+class cuenta_bancaria:
+    def __init__(self, num_cuenta, saldo):
+        self.num_cuenta = num_cuenta
+        self.__saldo = saldo
+
+    def mostrar_saldo(self):
+        return self.__saldo
+
+    def depositar(self, cantidad):
+        if cantidad > 0:
+            self.__saldo += cantidad
+            print(f"Se deposito la cantidad de ${cantidad} a la cuenta, nuevo saldo es de ${self.__saldo}")
+        else:
+            print("Ingrese una cantidad valida")
+
+    #Actividad 1
+    def retirar(self, cantidad):
+        if cantidad > 0:
+            if cantidad > self.__saldo:
+                print("No puedes retirar una cantidad mayor a tu saldo. Intenta de nuevo")
+            else:
+                self.__saldo = self.__saldo - cantidad
+                print(f"Se retiro la cantidad de ${cantidad}. El nuevo saldo es de ${self.__saldo}")
+        else:
+            print("Ingrese una cantidad valida")
+
+#Crear un objeto o instancia de la clase
+persona1 = Persona("Miguel", 20)
+cuenta1 = cuenta_bancaria("011", 500)
+
+persona1.asignar_cuenta(cuenta1)
+persona1.consultar_saldo()
+
+cuenta1.depositar(200)
+cuenta1.retirar(50)
+
+#Acceder a los valores de los atributos públicos
+#print(persona1.nombre)
+#print(persona1.edad)

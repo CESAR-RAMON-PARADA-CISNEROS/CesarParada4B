@@ -1,0 +1,101 @@
+#Practica 1 Clases, objetos y atributos
+
+#Una clase es un plantilla o un molde que define como será un objeto
+
+class Persona:
+    def __init__(self, nombre, edad): #Constructor de una Clase
+        self.nombre = nombre
+        self.edad = edad
+
+    def presentarse(self):
+        print(f"Hola mi nombre es {self.nombre}")
+
+    def cumplir_anios(self):
+        self.edad += 1
+        print(f"{self.nombre} y ahora tiene {self.edad} años")
+
+#Un objeto es una instancia creada a partir de una clase
+#Crear objeto que pertenece a una clase
+estudiante1 = Persona("César", 19) #Creacion de un objeto
+estudiante2 = Persona("Ximena", 19)
+
+estudiante1.presentarse()
+estudiante2.presentarse()
+
+#Paso 1. Agrega un método cumplir_anios() que aumente en 1 la edad
+estudiante1.cumplir_anios()
+estudiante2.cumplir_anios()
+
+
+#INSTANCIA:
+#Cada objeto creado de una clase es una instancia, podemos tener varias insatncias que
+#coesxistan por sus propios datos.
+#Objeto = instancia de la clase.
+#cada vez que se crea un objeto con Clase() se obtiene una instancia dependiente.
+#Cada instancia tiene sus propios datos aunque vengan de la misma clase.
+
+#Abstracción
+#Representar solo lo importante del mundo real ocultando detalles innecesarios.
+
+class automovil:
+    def __init__(self, marca):
+        self.marca = marca
+
+    def arrancar(self):
+        print(f"{self.marca} arrancó")
+
+#Crear un objeto auto y asignar una marca
+auto = automovil("BMW")
+auto.arrancar()
+#Abstracción: Nos centramos solo en lo que importa (acción) que es arrancar
+#el automovil, ocultando detalles internos como motor, transmisión, tipo_combustible.
+#Enfoque solo en la acción objeto.
+#Objeto es hacer el código mas limpio y facil de usar.
+
+# Práctica 1.2
+#1.- Crear una clase mascotas.
+#2.- Agregar minimo 4 atributos.
+#3.- Definir al menos 4 metodos métodos.
+#4.- Crear 2 instancias de la clase.
+#5.- Llamar los métodos y aplicar abstracción (Agregar un atributo) 
+
+class Mascotas:
+    def __init__(self, nombre, edad, tipo_animal, color, dueño):
+        self.nombre = nombre
+        self.edad = edad
+        self.tipo_animal = tipo_animal
+        self.color = color
+        self.dueño = dueño
+
+    def presentar(self):
+        print(f"El nombre de la mascota es {self.nombre} y su edad es {self.edad} y es {self.tipo_animal}")
+
+    def cumpleanos(self):
+        self.edad += 1
+        multiplo = int(input("Ingresa el número por el que se multiplica la edad de la mascota: "))
+        edad_final = self.edad * multiplo
+        print(f"La edad de la mascota es: {edad_final}")
+
+    def sonido(self):
+        if self.tipo_animal.lower() == "perro":
+            print("Guau")
+        elif self.tipo_animal.lower() == "gato":
+            print("Miua")
+        else:
+            print(" **Sonido generico de mascota** ")
+
+    def dueño(self):
+        print(f"El dueño del animal es {self.dueño}")
+
+mascota1 = Mascotas("Doffy", 3, "Perro", "Cafe", "Maria")
+mascota2 = Mascotas("Amy", 2, "Gato", "Blanco", "Juan")
+
+mascota1.presentar()
+mascota1.cumpleanos()
+mascota1.sonido()
+mascota1.dueño()
+
+mascota2.presentar()
+mascota2.cumpleanos()
+mascota2.sonido()
+mascota2.dueño()
